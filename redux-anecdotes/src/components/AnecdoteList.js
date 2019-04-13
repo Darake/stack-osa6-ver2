@@ -4,7 +4,9 @@ import { setNotification, nullNotification } from '../reducers/notificationReduc
 
 const AnecdoteList = props => {
   const store = props.store
-  const anecdotes = store.getState().anecdotes.sort((a, b) => b.votes - a.votes)
+  const anecdotes = store.getState().anecdotes
+    .filter(a => a.content.toLowerCase().includes(store.getState().filter.toLowerCase()))
+    .sort((a, b) => b.votes - a.votes)
 
   const vote = (anecdote) => {
     store.dispatch(voteAnecdote(anecdote.id))
